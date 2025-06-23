@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from 'dotenv';
+import usersRouter from './routes/users.js';
+import connectDB from './db-connect.js';
 
 dotenv.config();
 const app = express();
@@ -21,22 +23,25 @@ app.use(cors({
 
 app.use(express.json());
 
-// Dummy users data
-const users = [
-    { id: 1, name: "Alice", email: "alice@example.com" },
-    { id: 2, name: "Bob", email: "bob@example.com" },
-    { id: 3, name: "Charlie", email: "charlie@example.com" },
-    { id: 4, name: "Alex", email: "alex@example.com" }
-];
 
-// Users route
-app.get("/api/v1/users", (req, res) => {
-    res.json(users);
-});
+async function startServer() {
+  try {
+    // Connect to MongoDB and store the DB instance in app.locals
+    const db = await connectDB();
+    app.locals.db = db;
 
+    // Mount routes
+    app.use('/api/v1/users', usersRouter);
+    
+    // RENDER escucha todos los puertos - https://render.com/docs/web-services#port-binding
+    // Agregar un environment variable en render de PORT: 10000
+    app.listen(PORT, () => {
+        console.log(`Server listening on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1); // Exit the process with failure code
+  }
+}
 
-// RENDER escucha todos los puertos - https://render.com/docs/web-services#port-binding
-// Agregar un environment variable en render de PORT: 10000
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
-});
+startServer();

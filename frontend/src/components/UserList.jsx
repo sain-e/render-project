@@ -30,9 +30,9 @@ export default function UserList() {
     <div>
         <h2>User List</h2>
         <ul>
-            {users.map(({ id, name, email }) => (
-            <li key={id}>
-                <strong>{name}</strong> ({email}) - ID: {id}
+            {users.map(({ _id, name, email }) => (
+            <li key={_id}>
+                <strong>{name}</strong> ({email}) - ID: {_id}
             </li>
             ))}
         </ul>
