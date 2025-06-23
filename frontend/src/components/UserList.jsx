@@ -6,7 +6,7 @@ export default function UserList() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/v1/users/') 
+        fetch('https://render-project-lzbe.onrender.com/api/v1/users') 
         .then((res) => {
             if (!res.ok) throw new Error('Network response was not ok');
             return res.json();
