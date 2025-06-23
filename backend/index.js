@@ -5,10 +5,20 @@ import dotenv from 'dotenv';
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
-const ALLOWED_URL = process.env.ALLOWED_URL;
+const allowedOrigins = new Set(process.env.ALLOWED_ORIGINS.split(','));
 
 // Middleware
-app.use(cors({ origin: `${ALLOWED_URL}`, credentials: true }));  // specify ruta aqui
+app.use(cors({
+    origin: (origin, callback) => {
+        console.log(allowedOrigins);
+        if (!origin || allowedOrigins.has(origin)) {
+            return callback(null, true);
+        }
+        return callback(new Error('CORS policy: Origin not allowed'), false);
+    },
+    credentials: true,
+}));
+
 app.use(express.json());
 
 // Dummy users data

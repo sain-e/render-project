@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const USER_LIST = import.meta.env.VITE_USERS_FETCH;
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function UserList() {
     const [users, setUsers] = useState([]);
@@ -8,7 +8,7 @@ export default function UserList() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch(`${USER_LIST}`) 
+        fetch(`${API_URL}/api/v1/users`) 
         .then((res) => {
             if (!res.ok) throw new Error('Network response was not ok');
             return res.json();
