@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5000;
 const ALLOWED_URL = process.env.ALLOWED_URL;
 
 // Middleware
-app.use(cors({ origin: ALLOWED_URL }));  // specify ruta aqui
+app.use(cors({ origin: `${ALLOWED_URL}`, credentials: true }));  // specify ruta aqui
 app.use(express.json());
 
 // Dummy users data
