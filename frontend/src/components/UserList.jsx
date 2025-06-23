@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const USER_LIST = process.env.USERS_FETCH;
+const USER_LIST = import.meta.env.VITE_USERS_FETCH;
 
 export default function UserList() {
     const [users, setUsers] = useState([]);
