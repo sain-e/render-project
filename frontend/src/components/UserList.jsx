@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+
+const USER_LIST = process.env.USERS_FETCH;
 
 export default function UserList() {
     const [users, setUsers] = useState([]);
@@ -6,7 +8,7 @@ export default function UserList() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch('https://render-project-lzbe.onrender.com/api/v1/users') 
+        fetch(USER_LIST) 
         .then((res) => {
             if (!res.ok) throw new Error('Network response was not ok');
             return res.json();
